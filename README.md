@@ -108,4 +108,4 @@ python /home/CRNet_Aug/main.py \
 
 ## Acknowledgment
 
-Thank Chao-Kai Wen and Shi Jin group again for providing the pre-processed COST2100 dataset, you can find their related work named CsiNet in [Github-Python_CsiNet](https://github.com/sydney222/Python_CsiNet) 
+This repository is modified from the [CRNet open source code](https://github.com/Kylin9511/CRNet). Thank zhilin for his work named [CRNet](https://ieeexplore.ieee.org/document/9149229) and you can refer to it if you are instereted in the details. 
