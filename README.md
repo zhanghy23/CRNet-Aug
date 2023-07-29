@@ -58,7 +58,6 @@ python /home/CRNet_Aug/main.py \
   --cr 4 \
   --scheduler cosine \
   --gpu 0 \
-  2>&1 | tee log.out
 ```
 
 ## Results and Reproduction
@@ -103,7 +102,6 @@ python /home/CRNet_Aug/main.py \
   --workers 0 \
   --cr 4 \
   --cpu \
-  2>&1 | tee log.out
 ```
 
 ## Acknowledgment
