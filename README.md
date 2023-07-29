@@ -14,13 +14,13 @@ To use this project, you need to ensure the following requirements are installed
 
 #### A. Data Preparation
 
-The channel state information (CSI) matrix is generated from [COST2100](https://ieeexplore.ieee.org/document/6393523) model. Chao-Kai Wen and Shi Jin group provides a pre-processed version of COST2100 dataset in [Google Drive](https://drive.google.com/drive/folders/1_lAMLk_5k1Z8zJQlTr5NRnSD6ACaNRtj?usp=sharing), which is easier to use for the CSI feedback task; You can also download it from [Baidu Netdisk](https://pan.baidu.com/s/1Ggr6gnsXNwzD4ULbwqCmjA).
-
-You can generate your own dataset according to the [open source library of COST2100](https://github.com/cost2100/cost2100) as well. The details of data pre-processing can be found in our paper.
+The channel state information (CSI) matrix is generated from [COST2100](https://ieeexplore.ieee.org/document/6393523) model. 
+You can download it from [Baidu Netdisk](https://pan.baidu.com/s/1MCNrmmGShwHuttPMxcr_YA?pwd=9b0l). Datasets inculde mode-change and range-change datasets, whose meanings and details can be found in our paper.
+You can generate your own dataset according to the [open source library of COST2100](https://github.com/cost2100/cost2100) as well. The details of data pre-processing can be also found in our paper.
 
 #### B. Checkpoints Downloading
 
-The model checkpoints should be downloaded if you would like to reproduce our result. All the checkpoints files can be downloaded from [Baidu Netdisk](https://pan.baidu.com/s/1evKXkcF2Qp8Wn6cWJQiYQw) or [Google Drive](https://drive.google.com/drive/folders/16hQsrxkFuyjtmW4DOI8-Tix5TP5JfIia?usp=sharing)
+The model checkpoints should be downloaded if you would like to reproduce our result. All the checkpoints files can be downloaded from [Baidu Netdisk](https://pan.baidu.com/s/1rtAA-vXOHUCf3wXsfoR-4g?pwd=st0i)
 
 #### C. Project Tree Arrangement
 
@@ -28,29 +28,29 @@ We recommend you to arrange the project tree as follows.
 
 ```
 home
-├── CRNet  # The cloned CRNet repository
+├── CRNet_Aug  # The cloned CRNet repository
 │   ├── dataset
 │   ├── models
 │   ├── utils
 │   ├── main.py
-├── COST2100  # The data folder
-│   ├── DATA_Htestin.mat
+├── dataset_COST2100  # The data folder
+│   ├── range_change_train_in.mat
 │   ├── ...
 ├── Experiments
 │   ├── checkpoints  # The checkpoints folder
-│   │     ├── in_04.pth
+│   │     ├── range_in_4.pth
 │   │     ├── ...
 │   ├── run.sh  # The bash script
 ...
 ```
 
-## Train CRNet from Scratch
+## Train CRNet_Aug from Scratch
 
 An example of run.sh is listed below. Simply use it with `sh run.sh`. It will start advanced scheme aided CRNet training from scratch. Change scenario using `--scenario` and change compression ratio with `--cr`.
 
 ``` bash
-python /home/CRNet/main.py \
-  --data-dir '/home/COST2100' \
+python /home/CRNet_Aug/main.py \
+  --data-dir '/home/dataset_COST2100' \
   --scenario 'in' \
   --epochs 2500 \
   --batch-size 200 \
@@ -63,31 +63,41 @@ python /home/CRNet/main.py \
 
 ## Results and Reproduction
 
-The main results reported in our paper are presented as follows. All the listed results can be found in Table1 of our paper. They are achieved from training CRNet with our advanced training scheme (cosine annealing scheduler with warm up for 2500 epochs).
+The main results reported in our paper are presented as follows. All the listed results can be found in Table1 and Table2 of our paper. They are achieved from training CRNet with our proposed B-S and R-G data augmentation approaches. 
 
 
-Scenario | Compression Ratio | NMSE | Flops | Checkpoints
-:--: | :--: | :--: | :--: | :--:
-indoor | 1/4 | -26.99 | 5.12M | in_04.pth
-indoor | 1/8 | -16.01 | 4.07M | in_08.pth
-indoor | 1/16 | -11.35 | 3.55M | in_16.pth
-indoor | 1/32 | -8.93 | 3.28M | in_32.pth
-indoor | 1/64 | -6.49 | 3.16M | in_64.pth
-outdoor | 1/4 | -12.70 | 5.12M | out_04.pth
-outdoor | 1/8 | -8.04 | 4.07M | out_08.pth
-outdoor | 1/16 | -5.44 | 3.55M | out_16.pth
-outdoor | 1/32 | -3.51 | 3.28M | out_32.pth
-outdoor | 1/64 | -2.22 | 3.16M | out_64.pth
+Datasets | Scenario | Compression Ratio | Augmentation | NMSE | Checkpoints
+:--: | :--: | :--: | :--: | :--: | :--:
+mode-change | indoor | 1/4 | B-S | -28.22 | mode_in_4.pth
+mode-change | indoor | 1/8 | B-S | -17.73 | mode_in_8.pth
+mode-change | indoor | 1/16 | B-S | -13.02 | mode_in_16.pth
+mode-change | indoor | 1/32 | B-S | -10.55 | mode_in_32.pth
+mode-change | indoor | 1/64 | B-S | -6.65 | mode_in_64.pth
+mode-change | outdoor | 1/4 | B-S&R-G | -9.76 | mode_out_4.pth
+mode-change | outdoor | 1/8 | B-S&R-G | -7.32 | mode_out_8.pth
+mode-change | outdoor | 1/16 | B-S&R-G | -5.56 | mode_out_16.pth
+mode-change | outdoor | 1/32 | B-S&R-G | -3.79 | mode_out_32.pth
+mode-change | outdoor | 1/64 | B-S&R-G | -1.45 | mode_out_64.pth
+range-change | indoor | 1/4 | B-S | -26.97 | range_in_4.pth
+range-change | indoor | 1/8 | B-S | -16.10 | range_in_8.pth
+range-change | indoor | 1/16 | B-S | -9.52 | range_in_16.pth
+range-change | indoor | 1/32 | B-S | -8.37 | range_in_32.pth
+range-change | indoor | 1/64 | B-S | -5.03 | range_in_64.pth
+range-change | outdoor | 1/4 | B-S | -7.29 | range_out_4.pth
+range-change | outdoor | 1/8 | B-S | -4.92 | range_out_8.pth
+range-change | outdoor | 1/16 | B-S | -2.01 | range_out_16.pth
+range-change | outdoor | 1/32 | B-S | -1.20 | range_out_32.pth
+range-change | outdoor | 1/64 | B-S | -0.69 | range_out_64.pth
 
-As aforementioned, we provide model checkpoints for all the results. Our code library supports easy inference. 
+As aforementioned, we provide model checkpoints for the best results in Table1 and Table2. Our code library supports easy inference. 
 
 **To reproduce all these results, simple add `--evaluate` to `run.sh` and pick the corresponding pre-trained model with `--pretrained`.** An example is shown as follows.
 
 ``` bash
-python /home/CRNet/main.py \
-  --data-dir '/home/COST2100' \
+python /home/CRNet_Aug/main.py \
+  --data-dir '/home/dataset_COST2100' \
   --scenario 'in' \
-  --pretrained './checkpoints/in_04' \
+  --pretrained './checkpoints/mode_in_4.pth' \
   --evaluate \
   --batch-size 200 \
   --workers 0 \
