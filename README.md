@@ -1,6 +1,6 @@
 ## Overview
 
-This is the PyTorch implementation of paper [Data Augmentation of Bridging the Delay Gap for DL-based Massive MIMO CSI Feedback]().
+This is the PyTorch implementation of paper [Data Augmentation of Bridging the Delay Gap for DL-based Massive MIMO CSI Feedback](https://arxiv.org/abs/2308.00478).
 
 ## Requirements
 
